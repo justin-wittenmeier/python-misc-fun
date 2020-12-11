@@ -2,8 +2,7 @@
 class Game(object):
     def __init__(self):
         #generate board
-        self.board = []
-        while len(self.board) != 9: self.board.append(' ')
+        self.board = [' '] * 9
         
         #turn tracker
         self.current_turn = 'O'
@@ -13,7 +12,7 @@ class Game(object):
 
     #cleans the board
     def clearBoard(self):
-        for i in range(9): self.board[i] = ' '
+        self.board = [' '] * 9
     
     #prints the current board
     def printBoard(self): print(f'Current Board:\n{self.board[6]}|{self.board[7]}|{self.board[8]}\n-+-+-\n{self.board[3]}|{self.board[4]}|{self.board[5]}\n-+-+-\n{self.board[0]}|{self.board[1]}|{self.board[2]}')
@@ -171,6 +170,7 @@ class Game(object):
             return [mini, move]
         
         r = max(-2, 2)
+        
 
         self.board[r[1]] = 'X'
         
@@ -184,3 +184,4 @@ while True:
     while game.game_on:
         game.runGame()
         game.game_on = game.gameOver()
+        
