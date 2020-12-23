@@ -67,7 +67,6 @@ class Game(object):
             return self.playerMove()
         
         self.board[move] = 'O'
-
         self.current_turn = 'X'
     
     #The bots moves are decided via a minimax algorithm with alpha beta filtering
@@ -80,6 +79,7 @@ class Game(object):
 
             for i in win_check:
                 if all(x == i[0] for x in i) and i[0] != ' ': return i[0]
+                
             if ' ' not in self.board: return '--'
             else: return None
         
