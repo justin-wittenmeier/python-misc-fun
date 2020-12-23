@@ -1,4 +1,54 @@
-#puzzle board
+# Sudoku Solver in python.
+class Solver(object):
+    def __init__(self, board):
+        self.board = board
+
+    #Finds the next empty space.
+    def findSpace(self):
+        for i in range(9):
+            for x in range(9):
+                if self.board[i][x] == 0: return (i, x)
+        return False
+    
+    #Checks the puzzle to see if it is solved.
+    def checkBoard(self, number, position):
+        #Check Rows
+        for i in range(9):
+            if position[1] != i and self.board[position[0]][i] == number:
+                return False
+        #Check Columns
+        for i in range(9):
+            if position[0] != i and self.board[i][position[1]] == number:
+                return False
+        #Check Boxes
+        y = position[0] // 3
+        x = position[1] // 3
+        for i in range(y * 3, y * 3 + 3):
+            for c in range(x * 3, x * 3 + 3):
+                if position != (i,c) and self.board[i][c] == number:
+                    return False
+        #Returns True if the board is solved.
+        return True
+    
+    #Solves the puzzle using backtracking algorithim. 
+    def solver(self):
+        get_space = self.findSpace()
+        if get_space == False: return True
+        else: r, c = self.findSpace()
+
+        for i in range(1, 10):
+            if self.checkBoard(i, (r, c)):
+                self.board[r][c] = i
+                if self.solver(): return True
+                board[r][c] = 0
+        return False
+    
+    #Main Loop.
+    def main(self):
+        self.solver()
+        for i in self.board: print(i)
+
+#Puzzle to be solved. Zeros are blank spaces.
 board = [
 [5, 0, 0, 0, 0, 0, 0, 7, 0],
 [0, 2, 0, 0, 0, 6, 0, 0, 5],
@@ -11,51 +61,7 @@ board = [
 [0, 4, 0, 0, 0, 0, 0, 0, 9]
 ]
 
-#get empty space
-def emptySpace():
-    for i in range(9):
-        for x in range(9):
-            if board[i][x] == 0: return (i, x)
-    return False
-
-#review board
-def review(n, pos):
-    #reviews rows
-    for i in range(9):
-        if pos[1] != i and board[pos[0]][i] == n: return False
-    
-    #reviews cols
-    for i in range(9):
-        if pos[0] != i and board[i][pos[1]] == n: return False
-    
-    #reviews boxes
-    y = pos[0] // 3
-    x = pos[1] // 3
-
-    for i in range(y * 3, y * 3 + 3):
-        for c in range(x * 3, x * 3 + 3):
-            if pos != (i,c) and board[i][c] == n: return False
-        
-    return True
-
-#solves puzzle
-def solve():
-
-    get_space = emptySpace()
-    
-    if get_space == False: return True
-    else: r, c = get_space
-
-    for i in range(1,10):
-        if review(i, (r, c)):
-            board[r][c] = i
-            
-            if solve(): return True
-
-            board[r][c] = 0
-
-    return False
-
-#solve and print solved puzzle
-solve()
-for i in board: print(i)
+#Solve Puzzle
+if __name__ == "__main__":
+    solver = Solver(board)
+    solver.main()
