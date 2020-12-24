@@ -33,18 +33,17 @@ class Game:
         
     #Check the winner and display results.
     def winCheck(self, player, bot):
+        outcomes = [(self.moves[0], self.moves[2]),(self.moves[2], self.moves[1]), (self.moves[1], self.moves[0])]
         win_form = ['\nResults: Draw\n', '\nResults: Player Wins!\n', '\nResults: Computer Wins!\n']
-        if player == bot: print(win_form[0])
-        elif player == self.moves[0]:
-            if bot == self.moves[2]: print(win_form[1])
-            else: print(win_form[2])
-        elif player == self.moves[1]:
-            if bot == self.moves[0]: print(win_form[1])
-            else: print(win_form[2])
-        elif player == self.moves[2]:
-            if bot == self.moves[1]: print(win_form[1])
-            else: print(win_form[2])
-    
+        if player == bot: 
+            print(win_form[0])
+        else:
+            for i in outcomes:
+                if player == i[0]:
+                    if bot == i[1]:
+                        print(win_form[1])
+                    else:
+                        print(win_form[2])
     def main(self):
         self.winCheck(self.playerChoice(), self.botChoice())
                 
