@@ -7,6 +7,7 @@ class Game:
         self.moves = ['rock','paper','scissors']
         #Selects a move at random for the bot. 
         self.botChoice = lambda: random.choice(self.moves)
+        self.main()
     
     #Gets the players move.
     def playerChoice(self):
@@ -26,13 +27,14 @@ class Game:
                 return self.playerChoice()
             move = self.moves[move]
         #Alt Input Convert
-        if move == 'r': move = self.moves[0]
-        if move == 'p': move = self.moves[1]
-        if move == 's': move = self.moves[2]
+        for i in self.moves:
+            if move == i[0]:
+                move = i
         return move
         
     #Check the winner and display results.
     def winCheck(self, player, bot):
+        print(f'player: {player}\nbot: {bot}')
         outcomes = [(self.moves[0], self.moves[2]),(self.moves[2], self.moves[1]), (self.moves[1], self.moves[0])]
         win_form = ['\nResults: Draw\n', '\nResults: Player Wins!\n', '\nResults: Computer Wins!\n']
         if player == bot: 
@@ -50,4 +52,4 @@ class Game:
 #Run game.
 if __name__ == "__main__":
     game = Game()
-    game.main()
+    
